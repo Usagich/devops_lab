@@ -1,32 +1,58 @@
 fileInput = open('/home/student/input')
 number = int(fileInput.read())
-for i in range(10, 10000):
-    #for j in range()
-    if i < 100:
-        x = (i % 10)*(i // 10)
-        if x == number:
-            print i
-            break
-    elif i < 1000 and i > 100:
-        x = (i % 10)*(i // 10)*(i % 100)*(i // 100)
-        if x == number:
-            print i
-            break
-    elif i < 10000 and i > 1000:
-        x = (i % 10)*(i // 10)*(i % 100)*(i // 100)*(i % 1000)*(i // 1000)
-        if x == number:
-            print i
-            break
-else: print -1
 
+def primfacs(number):
+    print number
+    i = 2
+    primfac = []
+    res = []
+    check = 0
+    while i * i <= number:
+        while number % i == 0:
+            primfac.append(i)
+            number = number / i
+        i = i + 1
+    if number > 1:
+        primfac.append(number)
 
+    for i in primfac:
+        if i > 9:
+            return -1
+    i = primfac.count(2)
+    if i > 3:
+        while i < (primfac.count(2) // 3) and i!=0:
+            res.append(8)
+            i-=3
+        while i < primfac.count(2) % 3 and i!=0:
+            if i == 2:
+                res.append(4)
+            res.append(2)
+    elif i==2:
+        res.append(4)
+    elif i==1:
+        res.append(2)
+    i = primfac.count(3)
+    while i >= (primfac.count(3) // 2) and i!=0:
+        res.append(9)
+        i-=2
+    if i == 1:
+        res.append(3)
+    if 2 in res and 3 in res:
+        res.remove(2)
+        res.remove(3)
+        res.append(6)
+    for i in primfac:
+        if i not in res and i !=2 and i!=3:
+            res.append(i)
+    res.sort()
+    for i in res:
+        check*=i
+    if i != number:
+        return -1
+    else:
+        return res
+print primfacs(number)
 
+with open("/home/student/output", "a") as output:
+    output.write("%d" % primfacs(number))
 
-# Разложим N на простые множители. Если есть хоть один множитель больший 9, ответ -1.
-# Предположим, что у нас встречаются только множители 2 3 5 7. С 5 и 7 ничего сделать нельзя - они так и пойдут отдельными цифрами.
-# Значит, нам нужно минимизировать количество цифр,
-# составленных из 2 и 3, а при равном количестве минимизировать число, составленное из этих цифр в порядке возрастания.
-# Пока двоек больше трех, комбинируем их в восьмерки. Пока троек больше одной, комбинируем их в девятки.
-# Пока двоек больше одной, комбинируем их в четверки.
-# Если остались и 2 и 3, делаем шестерку, иначе просто добавляем то что осталось к ответу.
-# Затем сортируем в порядке возрастания все полученные цифры и выводим ответ.
