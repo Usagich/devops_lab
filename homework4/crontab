@@ -1,0 +1,1 @@
+*/5 * * * * python $HOME/pythonHome/devops_lab/homework3/main.py >> $HOME/log/daily 2>&1
